@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.br.gft.socialBookApi.domain.Comentarios;
 import com.br.gft.socialBookApi.domain.Livro;
 
 import com.br.gft.socialBookApi.services.LivrosService;
@@ -60,6 +61,7 @@ public class LivrosResources {
 	@RequestMapping(value = "/{id}" ,method = RequestMethod.GET)
 	public ResponseEntity<?> buscar(@PathVariable("id") Long id) {
 		
+		
 		Optional<Livro> livro   = livrosService.buscar(id);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(livro);
@@ -93,6 +95,23 @@ public class LivrosResources {
 	}
 	
 	
+	@RequestMapping(value = "/{id}/comentarios" ,method = RequestMethod.POST)
+	public ResponseEntity<Void> adicionarComentario( @PathVariable("id") Long livroId, @RequestBody Comentarios comentario ) {
+		
+		livrosService.salvarComentarios(livroId, comentario);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
+		
+		return ResponseEntity.created(uri).build();
+		
+	}
+	
+	@RequestMapping(value = "/{id}/comentarios" ,method = RequestMethod.GET)
+	public ResponseEntity<List<Comentarios>> listarComentarios(
+			@PathVariable("id") Long livroId ){
+		
+		List<Comentarios> comentarios = livrosService.ListarComentarios(livroId);
+		return ResponseEntity.status(HttpStatus.OK).body(comentarios);
+	} 
 	
 	
 }

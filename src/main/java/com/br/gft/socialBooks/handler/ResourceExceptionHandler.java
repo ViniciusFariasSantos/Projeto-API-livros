@@ -21,7 +21,7 @@ public class ResourceExceptionHandler {
 		DetalhesErro erro = new DetalhesErro();
 		
 		erro.setStatus(404l);
-		erro.setTitulo("O livro não pode ser encontrado ");
+		erro.setTitulo("O livro não pode ser encontrado.");
 		erro.setMensagemDesenvolvedor("http://erros.socialbooks.com/404");
 		erro.setTimestamp(System.currentTimeMillis());
 		System.out.println(erro.getStatus());
